@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D426FA9171C48B0002AB6B1 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D426FA7171C48B0002AB6B1 /* ISO8601DateFormatter.h */; };
+		2D426FAA171C48B0002AB6B1 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D426FA8171C48B0002AB6B1 /* ISO8601DateFormatter.m */; };
 		A46381DD1503692600EDD842 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = A46381D91503692600EDD842 /* CHANGELOG.md */; };
 		A46381DE1503692600EDD842 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A46381DB1503692600EDD842 /* JSONKit.m */; };
 		A46381DF1503692600EDD842 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A46381DC1503692600EDD842 /* README.md */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D426FA7171C48B0002AB6B1 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		2D426FA8171C48B0002AB6B1 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		A46381D91503692600EDD842 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		A46381DA1503692600EDD842 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		A46381DB1503692600EDD842 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D426FA5171C4896002AB6B1 /* ISO8601DateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				2D426FA7171C48B0002AB6B1 /* ISO8601DateFormatter.h */,
+				2D426FA8171C48B0002AB6B1 /* ISO8601DateFormatter.m */,
+			);
+			name = ISO8601DateFormatter;
+			sourceTree = "<group>";
+		};
 		A46381D71503692600EDD842 /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +148,7 @@
 		E4E480E41499B821009C36D8 /* Jastor */ = {
 			isa = PBXGroup;
 			children = (
+				2D426FA5171C4896002AB6B1 /* ISO8601DateFormatter */,
 				E4E480E71499B821009C36D8 /* Jastor.h */,
 				E4E480E81499B821009C36D8 /* Jastor.m */,
 				E4E480E51499B821009C36D8 /* Supporting Files */,
@@ -186,6 +200,7 @@
 				E4E4810F1499BBFE009C36D8 /* JastorRuntimeHelper.h in Headers */,
 				E4E4811B1499CDD6009C36D8 /* ProductCategory.h in Headers */,
 				E4E481231499CF21009C36D8 /* Product.h in Headers */,
+				2D426FA9171C48B0002AB6B1 /* ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +307,7 @@
 				E4E481101499BBFE009C36D8 /* JastorRuntimeHelper.m in Sources */,
 				E4E4811C1499CDD6009C36D8 /* ProductCategory.m in Sources */,
 				E4E481241499CF21009C36D8 /* Product.m in Sources */,
+				2D426FAA171C48B0002AB6B1 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

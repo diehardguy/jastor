@@ -8,13 +8,27 @@ static const char *property_getTypeName(objc_property_t property) {
 	strcpy(buffer, attributes);
 	char *state = buffer, *attribute;
 	while ((attribute = strsep(&state, ",")) != NULL) {
-		if (attribute[0] == 'T') {
-			size_t len = strlen(attribute);
+        if (attribute[0] == 'T' && attribute[1] != '@') {
+            // it's a C primitive type:
+            /*
+             if you want a list of what will be returned for these primitives, search online for
+             "objective-c" "Property Attribute Description Examples"
+             apple docs list plenty of examples of what you get for int "i", long "l", unsigned "I", struct, etc.
+             */
+            return (const char *)[[NSData dataWithBytes:(attribute + 1) length:strlen(attribute) - 1] bytes];
+        }
+        else if (attribute[0] == 'T' && attribute[1] == '@' && strlen(attribute) == 2) {
+            // it's an ObjC id type:
+            return "id";
+        }
+        else if (attribute[0] == 'T' && attribute[1] == '@') {
+            // it's another ObjC object type:
+            size_t len = strlen(attribute);
 			attribute[len - 1] = '\0';
 			return (const char *)[[NSData dataWithBytes:(attribute + 3) length:len - 2] bytes];
-		}
+        }
 	}
-	return "@";
+    return "@";
 }
 
 @implementation JastorRuntimeHelper
@@ -26,7 +40,6 @@ static NSMutableDictionary *propertyClassByClassAndPropertyName;
     NSString * typeString = [NSString stringWithUTF8String:type];
     NSArray * attributes = [typeString componentsSeparatedByString:@","];
     NSString * typeAttribute = [attributes objectAtIndex:1];
-
     return [typeAttribute rangeOfString:@"R"].length > 0;
 }
 
@@ -42,7 +55,7 @@ static NSMutableDictionary *propertyClassByClassAndPropertyName;
 	NSArray *value = [propertyListByClass objectForKey:className];
 	
 	if (value) {
-		return value; 
+		return value;
 	}
 	
 	NSMutableArray *propertyNamesArray = [NSMutableArray array];
@@ -52,7 +65,6 @@ static NSMutableDictionary *propertyClassByClassAndPropertyName;
 	for (unsigned int i = 0; i < propertyCount; ++i) {
 		objc_property_t property = properties[i];
 		const char * name = property_getName(property);
-		
 		[propertyNamesArray addObject:[NSString stringWithUTF8String:name]];
 	}
 	free(properties);
@@ -95,5 +107,39 @@ static NSMutableDictionary *propertyClassByClassAndPropertyName;
     //this will support traversing the inheritance chain
 	return [self propertyClassForPropertyName:propertyName ofClass:class_getSuperclass(klass)];
 }
+
++ (NSString*)propertyClassNameForPropertyName:(NSString *)propertyName ofClass:(Class)klass {
+	if (!propertyClassByClassAndPropertyName) {
+        propertyClassByClassAndPropertyName = [[NSMutableDictionary alloc] init];
+    }
+	
+	NSString *key = [NSString stringWithFormat:@"%@:%@", NSStringFromClass(klass), propertyName];
+	NSString *value = [propertyClassByClassAndPropertyName objectForKey:key];
+	
+	if (value) {
+		return value;
+	}
+	
+	unsigned int propertyCount = 0;
+	objc_property_t *properties = class_copyPropertyList(klass, &propertyCount);
+	
+	const char * cPropertyName = [propertyName UTF8String];
+	
+	for (unsigned int i = 0; i < propertyCount; ++i) {
+		objc_property_t property = properties[i];
+		const char * name = property_getName(property);
+		if (strcmp(cPropertyName, name) == 0) {
+			free(properties);
+			NSString *className = [NSString stringWithUTF8String:property_getTypeName(property)];
+			[propertyClassByClassAndPropertyName setObject:className forKey:key];
+            //we found the property - we need to free
+			return className;
+		}
+	}
+    free(properties);
+    //this will support traversing the inheritance chain
+	return [self propertyClassNameForPropertyName:propertyName ofClass:class_getSuperclass(klass)];
+}
+
 
 @end

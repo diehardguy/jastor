@@ -9,6 +9,10 @@
 @interface Jastor : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *objectId;
+@property (nonatomic, assign) Boolean isDirty;
+@property (nonatomic, assign) Boolean isNew;
+@property (nonatomic, assign) Boolean isRefreshing;
+
 + (id)objectFromDictionary:(NSDictionary*)dictionary;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
