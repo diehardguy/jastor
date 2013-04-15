@@ -1,9 +1,9 @@
-Jastor
+odataJastor
 ===
 
-Jastor is an Objective-C base class that is initialized with a dictionary (probably from your JSON response), and assigns dictionary values to all its (derived class's) typed @properties.
+odataJastor is an Objective-C base class that is initialized with a data response, and assigns dictionary values to all its (derived class's) typed @properties.
 
-It supports nested types, arrays, NSString, NSNumber, NSDate and more.
+It supports nested types, arrays, NSString, NSNumber, NSDate and more using appropriate Odata conversion were possible such as Odata ISO date to NSDate.
 
 Jastor is NOT a JSON parser. For that, you have [JSONKit](https://github.com/johnezang/JSONKit), [yajl](https://github.com/gabriel/yajl-objc) and many others.
 
